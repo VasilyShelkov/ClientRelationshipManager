@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.dropwizard:dropwizard-core:0.7.1'
+    compile 'io.dropwizard:dropwizard-db:0.7.1'
+    compile 'io.dropwizard:dropwizard-hibernate:0.7.1'
+    compile 'org.springframework:spring-context:latest.release'
+    compile 'junit:junit:latest.release'
+    compile 'mysql:mysql-connector-java:latest.release'
+    compile 'org.jooq:jooq:latest.release'
+    compile 'org.jooq:jooq-codegen:latest.release'
+    compile 'org.mockito:mockito-all:latest.release'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'ClientRelationshipDropWizardApplication'
+
+run {
+    args 'server', 'configuration.yml'
+}
