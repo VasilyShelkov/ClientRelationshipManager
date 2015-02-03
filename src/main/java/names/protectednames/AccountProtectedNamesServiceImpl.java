@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public class AccountProtectedNamesServiceImpl implements AccountProtectedNamesSe
     }
 
     @Override
-    public ProtectedName createProtectedName(int accountId, ProtectedName protectedName) throws SQLException, IllegalAccessException, InstantiationException {
+    public ProtectedName createProtectedName(ProtectedName protectedName) throws SQLException, IllegalAccessException, InstantiationException {
         List row = new ArrayList();
         row.add(protectedName.getNameId());
         row.add(protectedName.getAccountId());
@@ -39,6 +41,8 @@ public class AccountProtectedNamesServiceImpl implements AccountProtectedNamesSe
         row.add(protectedName.getCallback());
         row.add(protectedName.getDateBooked());
         row.add(protectedName.getPriority());
-        return accountAccountProtectedNamesSQLService.createRecord(row);
+        accountAccountProtectedNamesSQLService.createRecord(row);
+        protectedName.setProtectedAt(new Timestamp(new Date().getTime()));
+        return protectedName;
     }
 }

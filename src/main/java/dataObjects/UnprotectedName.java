@@ -29,9 +29,9 @@ public class UnprotectedName{
     }
 
     @JsonCreator
-    public UnprotectedName(@JsonProperty("nameId") int nameId, @JsonProperty("accountId") int accountId, @JsonProperty("comments") String comments, @JsonProperty("priority") unprotectedNamesPriority priority) {
-        this.nameId = nameId;
-        this.accountId = accountId;
+    public UnprotectedName(@JsonProperty("nameId") int nameID, @JsonProperty("accountId") int accountID, @JsonProperty("comments") String comments, @JsonProperty("priority") unprotectedNamesPriority priority) {
+        this.nameId = nameID;
+        this.accountId = accountID;
         this.comments = comments;
         this.priority = priority;
     }
@@ -54,6 +54,10 @@ public class UnprotectedName{
 
     public unprotectedNamesPriority getPriority() {
         return priority;
+    }
+
+    public void setAddedAt(Timestamp addedAt) {
+        this.addedAt = addedAt;
     }
 
     @Override

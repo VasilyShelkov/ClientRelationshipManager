@@ -179,7 +179,7 @@ public class NamesResource {
                 if (!isProtectedClient(nameId)) {
                     Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
                     if (constraintViolations.size() == 0) {
-                        return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(accountId, protectedName)).build();
+                        return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
                     }
                     return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                 }
@@ -206,7 +206,7 @@ public class NamesResource {
                 if (!isClient(nameId)) {
                     Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
                     if (constraintViolations.size() == 0) {
-                        return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(accountId, client)).build();
+                        return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
                     }
                     return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                 }

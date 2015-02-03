@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface AccountClientsService {
     List<Name> getClients(int accountId) throws SQLException, InstantiationException, IllegalAccessException;
-    Client createClient(int accountId, Client client) throws SQLException, InstantiationException, IllegalAccessException;
+    Client createClient(Client client) throws SQLException, InstantiationException, IllegalAccessException;
 }

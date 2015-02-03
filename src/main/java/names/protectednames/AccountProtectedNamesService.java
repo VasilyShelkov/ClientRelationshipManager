@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface AccountProtectedNamesService {
     List<Name> getProtectedNames(int accountId) throws SQLException, InstantiationException, IllegalAccessException;
-    ProtectedName createProtectedName(int accountId, ProtectedName protectedName) throws SQLException, IllegalAccessException, InstantiationException;
+    ProtectedName createProtectedName(ProtectedName protectedName) throws SQLException, IllegalAccessException, InstantiationException;
 }

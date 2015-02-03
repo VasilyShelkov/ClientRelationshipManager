@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,10 +31,12 @@ public class AccountClientsServiceImpl implements AccountClientsService {
     }
 
     @Override
-    public Client createClient(int accountId, Client client) throws SQLException, InstantiationException, IllegalAccessException {
+    public Client createClient(Client client) throws SQLException, InstantiationException, IllegalAccessException {
         List row = new ArrayList();
         row.add(client.getNameId());
         row.add(client.getAccountId());
-        return accountAccountClientsSQLService.createRecord(row);
+        accountAccountClientsSQLService.createRecord(row);
+        client.setClientAt(new Timestamp(new Date().getTime()));
+        return client;
     }
 }

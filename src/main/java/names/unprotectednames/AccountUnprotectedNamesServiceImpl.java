@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +33,13 @@ public class AccountUnprotectedNamesServiceImpl implements AccountUnprotectedNam
 
     @Override
     public UnprotectedName createUnprotectedName(UnprotectedName unprotectedName) throws SQLException, InstantiationException, IllegalAccessException {
-        return accountUnprotectedNamesSQLService.createRecord(unprotectedName);
+        List row = new ArrayList();
+        row.add(unprotectedName.getNameId());
+        row.add(unprotectedName.getAccountId());
+        row.add(unprotectedName.getComments());
+        row.add(unprotectedName.getPriority());
+        accountUnprotectedNamesSQLService.createRecord(row);
+        unprotectedName.setAddedAt(new Timestamp(new Date().getTime()));
+        return unprotectedName;
     }
 }

@@ -20,9 +20,6 @@ import static generated.Tables.PROTECTEDNAMES;
 @Service
 public class AccountProtectedNamesSQLService extends NamesSQLService {
 
-    private static List<Field<?>> protectedNameGetFields = Arrays.asList(PROTECTEDNAMES.NAMEID, PROTECTEDNAMES.ACCOUNTID,
-            PROTECTEDNAMES.COMMENTS, PROTECTEDNAMES.CALLED, PROTECTEDNAMES.BOOKED, PROTECTEDNAMES.CALLBACK, PROTECTEDNAMES.DATEBOOKED,
-            PROTECTEDNAMES.PROTECTEDAT, PROTECTEDNAMES.PRIORITY);
     private static List<Field<?>> protectedNameCreateFields = Arrays.asList(PROTECTEDNAMES.NAMEID, PROTECTEDNAMES.ACCOUNTID, PROTECTEDNAMES.COMMENTS,
             PROTECTEDNAMES.CALLED, PROTECTEDNAMES.BOOKED, PROTECTEDNAMES.CALLBACK, PROTECTEDNAMES.DATEBOOKED, PROTECTEDNAMES.PRIORITY);
 
@@ -40,12 +37,10 @@ public class AccountProtectedNamesSQLService extends NamesSQLService {
                 .fetchInto(Name.class);
     }
 
-    public ProtectedName createRecord(List row) throws SQLException, IllegalAccessException, InstantiationException {
-        return getDSLContext()
-                .insertInto(PROTECTEDNAMES, protectedNameCreateFields)
-                .values(row)
-                .returning(protectedNameGetFields)
-                .fetchOne()
-                .into(ProtectedName.class);
+    public void createRecord(List row) throws SQLException, IllegalAccessException, InstantiationException {
+        getDSLContext()
+            .insertInto(PROTECTEDNAMES, protectedNameCreateFields)
+            .values(row)
+            .execute();
     }
 }

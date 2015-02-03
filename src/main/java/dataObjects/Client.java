@@ -32,6 +32,10 @@ public class Client {
         return clientAt;
     }
 
+    public void setClientAt(Timestamp clientAt) {
+        this.clientAt = clientAt;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31).

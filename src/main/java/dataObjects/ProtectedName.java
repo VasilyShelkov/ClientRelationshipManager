@@ -84,6 +84,10 @@ public class ProtectedName{
         return priority;
     }
 
+    public void setProtectedAt(Timestamp protectedAt) {
+        this.protectedAt = protectedAt;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31).

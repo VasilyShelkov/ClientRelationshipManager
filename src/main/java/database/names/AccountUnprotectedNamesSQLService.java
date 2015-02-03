@@ -1,11 +1,8 @@
 package database.names;
 
 import dataObjects.Name;
-import dataObjects.UnprotectedName;
 import database.ConnectionService;
-import generated.tables.records.UnprotectednamesRecord;
 import org.jooq.Field;
-import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +19,6 @@ import static generated.Tables.UNPROTECTEDNAMES;
 @Service
 public class AccountUnprotectedNamesSQLService extends NamesSQLService {
 
-    private static List<Field<?>> unprotectedNameGetFields = Arrays.asList(UNPROTECTEDNAMES.NAMEID, UNPROTECTEDNAMES.ACCOUNTID,
-            UNPROTECTEDNAMES.COMMENTS, UNPROTECTEDNAMES.ADDEDAT, UNPROTECTEDNAMES.PRIORITY);
     private static List<Field<?>> unprotectedNameCreateFields = Arrays.asList(UNPROTECTEDNAMES.NAMEID, UNPROTECTEDNAMES.ACCOUNTID,
             UNPROTECTEDNAMES.COMMENTS, UNPROTECTEDNAMES.PRIORITY);
 
@@ -41,9 +36,10 @@ public class AccountUnprotectedNamesSQLService extends NamesSQLService {
                 .fetchInto(Name.class);
     }
 
-    public UnprotectedName createRecord(UnprotectedName unprotectedName) throws SQLException, IllegalAccessException, InstantiationException{
-        UnprotectednamesRecord myUnprotectedName = getDSLContext().newRecord(UNPROTECTEDNAMES, unprotectedName);
-        System.out.println(myUnprotectedName.getNameId()+ "   "+ myUnprotectedName.getAccountId());
-        return unprotectedName;
+    public void createRecord(List record) throws SQLException, IllegalAccessException, InstantiationException{
+            getDSLContext()
+            .insertInto(UNPROTECTEDNAMES, unprotectedNameCreateFields)
+            .values(record)
+            .execute();
     }
 }
