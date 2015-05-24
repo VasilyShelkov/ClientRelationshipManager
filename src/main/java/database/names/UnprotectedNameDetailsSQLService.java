@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static generated.Tables.NAMES;
 import static generated.Tables.UNPROTECTEDNAMES;
 
 /**
@@ -21,7 +20,8 @@ import static generated.Tables.UNPROTECTEDNAMES;
 @Service
 public class UnprotectedNameDetailsSQLService extends JOOQSQLService {
 
-    static private List<Field<?>> unprotectedNameFields = Arrays.asList(UNPROTECTEDNAMES.COMMENTS, UNPROTECTEDNAMES.ADDEDAT, UNPROTECTEDNAMES.PRIORITY);
+    static private List<Field<?>> unprotectedNameFields = Arrays.asList(UNPROTECTEDNAMES.COMMENTS, UNPROTECTEDNAMES.ADDEDAT,
+            UNPROTECTEDNAMES.PRIORITY);
 
     @Autowired
     public UnprotectedNameDetailsSQLService(ConnectionService connectionService) {
@@ -32,7 +32,6 @@ public class UnprotectedNameDetailsSQLService extends JOOQSQLService {
         Record record = getDSLContext()
                 .select(unprotectedNameFields)
                 .from(UNPROTECTEDNAMES)
-                .naturalJoin(NAMES)
                 .where(UNPROTECTEDNAMES.ACCOUNTID.equal(accountId))
                 .and(UNPROTECTEDNAMES.NAMEID.equal(nameId))
                 .fetchOne();

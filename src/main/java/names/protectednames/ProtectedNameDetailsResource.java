@@ -5,7 +5,6 @@ import dataObjects.ProtectedName;
 import names.NameDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -19,14 +18,11 @@ public class ProtectedNameDetailsResource {
 
     private ProtectedNameDetailsService protectedNameDetailsService;
     NameDetailsService nameDetailsService;
-    private Validator validator;
 
     @Autowired
-    public ProtectedNameDetailsResource(ProtectedNameDetailsService protectedNameDetailsService, NameDetailsService nameDetailsService,
-                                        Validator validator) {
+    public ProtectedNameDetailsResource(ProtectedNameDetailsService protectedNameDetailsService, NameDetailsService nameDetailsService) {
         this.protectedNameDetailsService = protectedNameDetailsService;
         this.nameDetailsService = nameDetailsService;
-        this.validator = validator;
     }
 
     @GET
@@ -50,7 +46,7 @@ public class ProtectedNameDetailsResource {
             if(name.getFirstName().toUpperCase().equals(confirmedClientFirstName)){
                 if(protectedNameDetailsService.getDetails(nameId, accountId) != null) {
                     protectedNameDetailsService.removeUnprotectedName(nameId, accountId);
-                    return Response.noContent().entity(name.getFirstName() + " has been successfully deleted").build();
+                    return Response.status(Response.Status.OK).entity(name.getFirstName() + " has been successfully deleted").build();
                 }
                 return Response.status(Response.Status.BAD_REQUEST).entity(name.getFirstName() + " " + name.getOtherNames()
                         + " does not exist and therefore can not be deleted").build();

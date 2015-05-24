@@ -11,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -30,14 +28,13 @@ public class UnprotectedNameDetailsResourceTest {
     NameDetailsService mockNameDetailsService;
 
     private UnprotectedNameDetailsResource unprotectedNameDetailsResource;
-    private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private Timestamp currentTime;
     private Name testName;
     private UnprotectedName testUnprotectedName;
 
     @Before
     public void setUp() {
-        unprotectedNameDetailsResource = new UnprotectedNameDetailsResource(mockUnprotectedNameDetailService, mockNameDetailsService, factory.getValidator());
+        unprotectedNameDetailsResource = new UnprotectedNameDetailsResource(mockUnprotectedNameDetailService, mockNameDetailsService);
         currentTime = new Timestamp(DateTime.now().getMillis());
         testName = new Name("testFirstName", "testOtherNames", "testMobNumber", "testOfficeNumber", "testCompany");
         testUnprotectedName = new UnprotectedName("testComments", currentTime, unprotectedNamesPriority.Medium);

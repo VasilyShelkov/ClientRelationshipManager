@@ -38,6 +38,7 @@ public class AccountClientsSQLService extends NamesSQLService {
     public void createRecord(List row) throws SQLException, IllegalAccessException, InstantiationException {
         getDSLContext()
             .insertInto(CLIENTS, clientCreateFields)
-            .values(row);
+            .values(row)
+            .execute();
     }
 }

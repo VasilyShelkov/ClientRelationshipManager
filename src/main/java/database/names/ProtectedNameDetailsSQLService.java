@@ -4,6 +4,7 @@ import dataObjects.ProtectedName;
 import database.ConnectionService;
 import database.JOOQSQLService;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static generated.Tables.NAMES;
 import static generated.Tables.PROTECTEDNAMES;
 
 /**
@@ -20,8 +20,9 @@ import static generated.Tables.PROTECTEDNAMES;
 @Service
 public class ProtectedNameDetailsSQLService extends JOOQSQLService {
 
-    static private List<Field<?>> protectedNameFields = Arrays.asList(NAMES.FIRSTNAME, NAMES.OTHERNAMES, NAMES.MOBILENUMBER,
-            NAMES.OFFICENUMBER, NAMES.COMPANY, NAMES.PICTUREID);
+    static private List<Field<?>> protectedNameFields = Arrays.asList(PROTECTEDNAMES.COMMENTS, PROTECTEDNAMES.CALLED,
+            PROTECTEDNAMES.BOOKED, PROTECTEDNAMES.CALLBACK, PROTECTEDNAMES.DATEBOOKED, PROTECTEDNAMES.PROTECTEDAT,
+            PROTECTEDNAMES.PRIORITY);
 
     @Autowired
     public ProtectedNameDetailsSQLService(ConnectionService connectionService) {
@@ -29,13 +30,16 @@ public class ProtectedNameDetailsSQLService extends JOOQSQLService {
     }
 
     public ProtectedName getProtectedNameDetails(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
-        return getDSLContext()
+        Record record = getDSLContext()
                 .select(protectedNameFields)
                 .from(PROTECTEDNAMES)
-                .naturalJoin(NAMES)
                 .where(PROTECTEDNAMES.ACCOUNTID.equal(accountId))
                 .and(PROTECTEDNAMES.NAMEID.equal(nameId))
-                .fetchOne().into(ProtectedName.class);
+                .fetchOne();
+        if (record == null){
+            return null;
+        }
+        return record.into(ProtectedName.class);
     }
 
     public void removeProtectedName(int nameId, int accountId) throws SQLException, InstantiationException, IllegalAccessException{

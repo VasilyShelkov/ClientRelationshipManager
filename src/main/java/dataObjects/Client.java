@@ -1,7 +1,9 @@
 package dataObjects;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.sql.Timestamp;
 
@@ -14,10 +16,14 @@ public class Client {
     private int accountId;
     private Timestamp clientAt;
 
-    public Client(int nameId, int accountId, Timestamp clientAt) {
+    public Client(Timestamp clientAt) {
+        this.clientAt = clientAt;
+    }
+
+    @JsonCreator
+    public Client(@JsonProperty("nameId") int nameId,@JsonProperty("accountId") int accountId) {
         this.nameId = nameId;
         this.accountId = accountId;
-        this.clientAt = clientAt;
     }
 
     public int getNameId() {

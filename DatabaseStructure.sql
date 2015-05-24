@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `unprotectednames` (
   PRIMARY KEY (`NameID`,`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-protectmeprotectme-- Dumping data for table test.unprotectednames: ~6 rows (approximately)
+protectme-- Dumping data for table test.unprotectednames: ~6 rows (approximately)
 INSERT INTO `unprotectednames` (`NameID`, `Username`, `Comments`, `AddedAt`, `Priority`) VALUES
 	(127, 'regency', 'First booked 03/03/14', '2014-11-18 17:12:16', 'Low'),
 	(128, 'regency', 'client', '2014-11-18 17:12:16', 'Low'),
@@ -115,4 +115,4 @@ INSERT INTO `unprotectednames` (`NameID`, `Username`, `Comments`, `AddedAt`, `Pr
 	(130, 'regency', 'client', '2014-11-18 17:12:16', 'Low'),
 	(131, 'regency', 'client', '2014-11-18 17:12:16', 'Low'),
 	(132, 'regency', 'client', '2014-11-18 17:12:16', 'Low');
-protectmeprotectme
+protectme

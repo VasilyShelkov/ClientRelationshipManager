@@ -1,18 +1,3 @@
-# Database settings.
-database:
-
-  # the name of your JDBC driver
-  driverClass: com.mysql.jdbc.Driver
-
-  # the username
-  user: root
-
-  # the password
-  password: root
-
-  # the JDBC URL
-  url: jdbc:mysql://localhost:3306/protectme
-
 # Logging settings.
 logging:
 

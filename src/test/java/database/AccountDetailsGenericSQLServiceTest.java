@@ -1,14 +1,11 @@
 package database;
 
 import dataObjects.Account;
-import dataObjects.Client;
 import dataObjects.Name;
-import dataObjects.ProtectedName;
 import database.account.AccountDetailsSQLService;
 import database.names.AccountClientsSQLService;
 import database.names.AccountProtectedNamesSQLService;
 import database.names.AccountUnprotectedNamesSQLService;
-import generated.enums.ProtectedNamesPriority;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +59,7 @@ public class AccountDetailsGenericSQLServiceTest {
         assertEquals(actualUnprotectedNames.get(0).getMobileNumber(), testName.getMobileNumber());
         assertEquals(actualUnprotectedNames.get(0).getOfficeNumber(), testName.getOfficeNumber());
         assertEquals(actualUnprotectedNames.get(0).getCompany(), testName.getCompany());
-        assertEquals(actualUnprotectedNames.size(), 2);
+        assertEquals(actualUnprotectedNames.size(), 4);
     }
 
 

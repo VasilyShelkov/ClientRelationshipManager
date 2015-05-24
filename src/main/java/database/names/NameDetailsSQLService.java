@@ -2,6 +2,7 @@ package database.names;
 
 import dataObjects.Name;
 import database.ConnectionService;
+import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +34,15 @@ public class NameDetailsSQLService extends NamesSQLService{
     }
 
     public Name getName(int nameId) throws SQLException, IllegalAccessException, InstantiationException{
-        return getDSLContext()
+        Record record = getDSLContext()
                 .select(getNameFields())
                 .from(NAMES)
                 .where(NAMES.NAMEID.equal(nameId))
-                .fetchOne()
+                .fetchOne();
+        if (record == null){
+            return null;
+        }
+        return record
                 .into(Name.class);
     }
 }

@@ -9,9 +9,9 @@ repositories {
 }
 
 dependencies {
-    compile 'io.dropwizard:dropwizard-core:0.7.1'
-    compile 'io.dropwizard:dropwizard-db:0.7.1'
-    compile 'io.dropwizard:dropwizard-hibernate:0.7.1'
+    compile 'io.dropwizard:dropwizard-core:latest.release'
+    compile 'io.dropwizard:dropwizard-db:latest.release'
+    compile 'io.dropwizard:dropwizard-hibernate:latest.release'
     compile 'org.springframework:spring-context:latest.release'
     compile 'junit:junit:latest.release'
     compile 'mysql:mysql-connector-java:latest.release'

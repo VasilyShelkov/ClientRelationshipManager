@@ -3,18 +3,14 @@ package database;
 import dataObjects.Account;
 import database.generic.GenericAccountSQLService;
 import generated.Tables;
-import generated.tables.records.AccountsRecord;
 import org.joda.time.DateTime;
-import org.jooq.TableField;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.List;
 
-import static generated.tables.Accounts.ACCOUNTS;
 import static org.junit.Assert.assertEquals;
 
 public class GenericSQLServiceTest {
@@ -40,6 +36,6 @@ public class GenericSQLServiceTest {
         accountList = GenericSQLService.getTable(Tables.ACCOUNTS);
 
         assertEquals(accountList.get(0), testAccount);
-        assertEquals(accountList.size(), 2);
+        assertEquals(accountList.size(), 3);
     }
 }

@@ -3,18 +3,14 @@ package names.clients;
 import dataObjects.Client;
 import dataObjects.Name;
 import names.NameDetailsService;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -29,17 +25,14 @@ public class ClientDetailsResourceTest {
     NameDetailsService mockNameDetailsService;
 
     private ClientDetailsResource clientDetailsResource;
-    private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    private Timestamp currentTime;
     private Name testName;
     private Client testClient;
 
     @Before
     public void setUp() {
-        clientDetailsResource = new ClientDetailsResource(mockClientDetailService, mockNameDetailsService, factory.getValidator());
-        currentTime = new Timestamp(DateTime.now().getMillis());
+        clientDetailsResource = new ClientDetailsResource(mockClientDetailService, mockNameDetailsService);
         testName = new Name("testFirstName", "testOtherNames", "testMobNumber", "testOfficeNumber", "testCompany");
-        testClient = new Client(1, 2, currentTime);
+        testClient = new Client(1, 2);
     }
 
     @Test

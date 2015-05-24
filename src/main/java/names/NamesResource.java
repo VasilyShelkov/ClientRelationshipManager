@@ -152,13 +152,16 @@ public class NamesResource {
         try {
             int nameId = unprotectedName.getNameId();
             int accountId = unprotectedName.getAccountId();
-            if(unprotectedNameDetailsService.getDetails(nameId, accountId) == null) {
-                if (!isProtectedClient(nameId)) {
-                    return Response.status(Response.Status.CREATED).entity(accountUnprotectedNamesService.createUnprotectedName(unprotectedName)).build();
+            if(nameDetailsService.getName(nameId) != null) {
+                if (unprotectedNameDetailsService.getDetails(nameId, accountId) == null) {
+                    if (!isProtectedClient(nameId)) {
+                        return Response.status(Response.Status.CREATED).entity(accountUnprotectedNamesService.createUnprotectedName(unprotectedName)).build();
+                    }
+                    return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
                 }
-                return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
+                return Response.status(Response.Status.CONFLICT).entity("unprotected name already exists").build();
             }
-            return Response.status(Response.Status.CONFLICT).entity("unprotected name already exists").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("name does not exist").build();
         } catch (SQLException |InstantiationException|IllegalAccessException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
@@ -175,17 +178,20 @@ public class NamesResource {
         try {
             int nameId = protectedName.getNameId();
             int accountId = protectedName.getAccountId();
-            if(protectedNameDetailsService.getDetails(nameId, accountId) != null) {
-                if (!isProtectedClient(nameId)) {
-                    Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
-                    if (constraintViolations.size() == 0) {
-                        return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
+            if(nameDetailsService.getName(nameId) != null) {
+                if (protectedNameDetailsService.getDetails(nameId, accountId) == null) {
+                    if (!isProtectedClient(nameId)) {
+                        Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
+                        if (constraintViolations.size() == 0) {
+                            return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
+                        }
+                        return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                     }
-                    return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
+                    return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
                 }
-                return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("protected name already exists").build();
             }
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity("protected name already exists").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("name does not exist").build();
         } catch (SQLException |InstantiationException|IllegalAccessException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
@@ -202,17 +208,20 @@ public class NamesResource {
         try {
             int nameId = client.getNameId();
             int accountId = client.getAccountId();
-            if(clientDetailsService.getDetails(nameId, accountId) != null) {
-                if (!isClient(nameId)) {
-                    Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
-                    if (constraintViolations.size() == 0) {
-                        return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
+            if(nameDetailsService.getName(nameId) != null) {
+                if (clientDetailsService.getDetails(nameId, accountId) == null) {
+                    if (!isClient(nameId)) {
+                        Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
+                        if (constraintViolations.size() == 0) {
+                            return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
+                        }
+                        return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                     }
-                    return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
+                    return Response.status(Response.Status.CONFLICT).entity("Name is already a client to someone else").build();
                 }
-                return Response.status(Response.Status.CONFLICT).entity("Name is already a client to someone else").build();
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("client already exists").build();
             }
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity("client already exists").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("name does not exist").build();
         } catch (SQLException |InstantiationException|IllegalAccessException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }

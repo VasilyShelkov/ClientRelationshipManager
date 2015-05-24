@@ -11,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -30,14 +28,13 @@ public class ProtectedNameDetailsResourceTest {
     NameDetailsService mockNameDetailsService;
 
     private ProtectedNameDetailsResource protectedNameDetailsResource;
-    private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private Timestamp currentTime;
     private Name testName;
     private ProtectedName testProtectedName;
 
     @Before
     public void setUp() {
-        protectedNameDetailsResource = new ProtectedNameDetailsResource(mockProtectedNameDetailService, mockNameDetailsService, factory.getValidator());
+        protectedNameDetailsResource = new ProtectedNameDetailsResource(mockProtectedNameDetailService, mockNameDetailsService);
         currentTime = new Timestamp(DateTime.now().getMillis());
         testName = new Name("testFirstName", "testOtherNames", "testMobNumber", "testOfficeNumber", "testCompany");
         testProtectedName = new ProtectedName("testComments", true, false, currentTime, currentTime, currentTime, ProtectedNamesPriority.Medium);
@@ -46,7 +43,6 @@ public class ProtectedNameDetailsResourceTest {
     @Test
     public void getProtectedNamesDetailTest() throws IllegalAccessException, SQLException, InstantiationException {
         int okStatus = 200;
-        Timestamp currentTime = new Timestamp(DateTime.now().getMillis());
 
         when(mockProtectedNameDetailService.getDetails(1, 2)).thenReturn(testProtectedName);
         Response response = protectedNameDetailsResource.getProtectedNameDetails(1, 2);

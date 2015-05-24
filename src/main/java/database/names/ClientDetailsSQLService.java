@@ -4,6 +4,7 @@ import dataObjects.Client;
 import database.ConnectionService;
 import database.JOOQSQLService;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static generated.Tables.CLIENTS;
-import static generated.Tables.NAMES;
 
 /**
  * Created by Vasia on 24/01/2015.
@@ -20,8 +20,7 @@ import static generated.Tables.NAMES;
 @Service
 public class ClientDetailsSQLService extends JOOQSQLService {
 
-    static private List<Field<?>> clientFields = Arrays.asList(NAMES.FIRSTNAME, NAMES.OTHERNAMES, NAMES.MOBILENUMBER,
-            NAMES.OFFICENUMBER, NAMES.COMPANY, NAMES.PICTUREID);
+    static private List<Field<?>> clientFields = Arrays.asList(CLIENTS.CLIENTAT);
 
     @Autowired
     public ClientDetailsSQLService(ConnectionService connectionService) {
@@ -29,13 +28,16 @@ public class ClientDetailsSQLService extends JOOQSQLService {
     }
 
     public Client getClientDetails(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
-        return getDSLContext()
+        Record record = getDSLContext()
                 .select(clientFields)
                 .from(CLIENTS)
-                .naturalJoin(NAMES)
                 .where(CLIENTS.ACCOUNTID.equal(accountId))
                 .and(CLIENTS.NAMEID.equal(nameId))
-                .fetchOne().into(Client.class);
+                .fetchOne();
+        if (record == null){
+            return null;
+        }
+        return record.into(Client.class);
     }
 
     public void removeClient(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
