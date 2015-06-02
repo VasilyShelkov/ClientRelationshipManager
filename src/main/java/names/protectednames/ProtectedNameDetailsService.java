@@ -9,5 +9,5 @@ import java.sql.SQLException;
  */
 public interface ProtectedNameDetailsService {
     ProtectedName getDetails(int nameId) throws SQLException, InstantiationException, IllegalAccessException;
-    void removeUnprotectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException;
+    void removeProtectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException;
 }

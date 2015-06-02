@@ -26,7 +26,7 @@ public class ProtectedNameDetailsServiceImpl implements ProtectedNameDetailsServ
     }
 
     @Override
-    public void removeUnprotectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException{
+    public void removeProtectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException{
         protectedNameDetailsSQLService.removeProtectedName(nameId);
     }
 }

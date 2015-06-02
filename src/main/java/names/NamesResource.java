@@ -170,10 +170,12 @@ public class NamesResource {
     public Response createProtectedName(ProtectedName protectedName) {
         try {
             int nameId = protectedName.getNameId();
+            int accountId = protectedName.getAccountId();
             if(nameDetailsService.getName(nameId) != null) {
                 if (!isProtectedClient(nameId)) {
                     Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
                     if (constraintViolations.size() == 0) {
+                        unprotectedNameDetailsService.removeUnprotectedName(nameId, accountId);
                         return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
                     }
                     return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
@@ -196,10 +198,12 @@ public class NamesResource {
     public Response createClient(Client client) {
         try {
             int nameId = client.getNameId();
+            int accountId = client.getAccountId();
             if(nameDetailsService.getName(nameId) != null) {
                 if (!isClient(nameId)) {
                     Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
                     if (constraintViolations.size() == 0) {
+                        protectedNameDetailsService.removeProtectedName(nameId);
                         return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
                     }
                     return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();

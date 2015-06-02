@@ -44,7 +44,7 @@ public class ProtectedNameDetailsResource {
             Name name = nameDetailsService.getName(nameId);
             if(name.getFirstName().toUpperCase().equals(confirmedClientFirstName)){
                 if(protectedNameDetailsService.getDetails(nameId) != null) {
-                    protectedNameDetailsService.removeUnprotectedName(nameId);
+                    protectedNameDetailsService.removeProtectedName(nameId);
                     return Response.status(Response.Status.OK).entity(name.getFirstName() + " has been successfully deleted").build();
                 }
                 return Response.status(Response.Status.BAD_REQUEST).entity(name.getFirstName() + " " + name.getOtherNames()
