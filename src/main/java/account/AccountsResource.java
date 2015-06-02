@@ -1,7 +1,5 @@
 package account;
 
-import account.client.ClientAccountsService;
-import account.protectedname.ProtectedNameAccountsService;
 import account.unprotectedname.UnprotectedNameAccountsService;
 import com.codahale.metrics.annotation.ExceptionMetered;
 import com.codahale.metrics.annotation.Timed;
@@ -15,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,19 +23,15 @@ public class AccountsResource {
 
     private AccountService accountService;
     private AccountDetailService accountDetailService;
-    private ClientAccountsService clientAccountsService;
     private UnprotectedNameAccountsService unprotectedNameAccountsService;
-    private ProtectedNameAccountsService protectedNameAccountsService;
     private Validator validator;
 
     @Autowired
     public AccountsResource(AccountService accService, AccountDetailService accDetailsService, UnprotectedNameAccountsService accUnprotectedNamesService,
-                            ProtectedNameAccountsService accProtectedNamesService, ClientAccountsService accClientsService, Validator validator) {
+                            Validator validator) {
         this.accountService = accService;
         this.accountDetailService = accDetailsService;
-        this.clientAccountsService = accClientsService;
         this.unprotectedNameAccountsService = accUnprotectedNamesService;
-        this.protectedNameAccountsService = accProtectedNamesService;
         this.validator = validator;
     }
 
@@ -86,34 +79,6 @@ public class AccountsResource {
     public Response getUnprotectedNameAccounts(@PathParam("nameId") int id) {
         try{
             return Response.ok(unprotectedNameAccountsService.getUnprotectedNameAccounts(id)).build();
-        }catch (SQLException |InstantiationException|IllegalAccessException e){
-            return Response.serverError().entity(e.getMessage()).build();
-        }
-    }
-
-    @Path("/{nameId}/Protected")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Timed
-    @UnitOfWork
-    @ExceptionMetered
-    public Response getProtectedNameAccounts(@PathParam("nameId") int id) {
-        try{
-            return Response.ok(protectedNameAccountsService.getProtectedNameAccounts(id)).build();
-        }catch (SQLException |InstantiationException|IllegalAccessException e){
-            return Response.serverError().entity(e.getMessage()).build();
-        }
-    }
-
-    @Path("/{nameId}/Client")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Timed
-    @UnitOfWork
-    @ExceptionMetered
-    public Response getClientAccounts(@PathParam("nameId") int id) {
-        try{
-            return Response.ok(clientAccountsService.getClientNameAccounts(id)).build();
         }catch (SQLException |InstantiationException|IllegalAccessException e){
             return Response.serverError().entity(e.getMessage()).build();
         }

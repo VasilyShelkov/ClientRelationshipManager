@@ -12,7 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,8 +39,8 @@ public class ClientDetailsResourceTest {
     public void getClientDetailTest() throws IllegalAccessException, SQLException, InstantiationException {
         int okStatus = 200;
 
-        when(mockClientDetailService.getDetails(1, 2)).thenReturn(testClient);
-        Response response = clientDetailsResource.getClientDetails(1, 2);
+        when(mockClientDetailService.getDetails(1)).thenReturn(testClient);
+        Response response = clientDetailsResource.getClientDetails(1);
 
         assertEquals(response.getStatus(), okStatus);
         assertEquals(response.getEntity(), testClient);
@@ -51,8 +51,8 @@ public class ClientDetailsResourceTest {
         int errorStatus = 500;
         String errorMessage = "You Have An Error";
 
-        when(mockClientDetailService.getDetails(1, 2)).thenThrow(new SQLException("You Have An Error"));
-        Response response = clientDetailsResource.getClientDetails(1, 2);
+        when(mockClientDetailService.getDetails(1)).thenThrow(new SQLException("You Have An Error"));
+        Response response = clientDetailsResource.getClientDetails(1);
 
         assertEquals(response.getStatus(), errorStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -141,7 +141,7 @@ public class ClientDetailsResourceTest {
         String errorMessage = "Did not delete client because the first name was not spelt correctly in CAPITALS";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        Response response = clientDetailsResource.removeClient(1, 2, "WRONGFIRSTNAME");
+        Response response = clientDetailsResource.removeClient(1, "WRONGFIRSTNAME");
 
         assertEquals(response.getStatus(), notAcceptableStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -153,8 +153,8 @@ public class ClientDetailsResourceTest {
         String errorMessage = "testFirstName testOtherNames does not exist and therefore can not be deleted";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        when(mockClientDetailService.getDetails(1, 2)).thenReturn(null);
-        Response response = clientDetailsResource.removeClient(1, 2, "TESTFIRSTNAME");
+        when(mockClientDetailService.getDetails(1)).thenReturn(null);
+        Response response = clientDetailsResource.removeClient(1, "TESTFIRSTNAME");
 
         assertEquals(response.getStatus(), noContentStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -166,8 +166,8 @@ public class ClientDetailsResourceTest {
         String errorMessage = "You have an error";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        when(mockClientDetailService.getDetails(1, 2)).thenThrow(new SQLException("You have an error"));
-        Response response = clientDetailsResource.removeClient(1, 2, "TESTFIRSTNAME");
+        when(mockClientDetailService.getDetails(1)).thenThrow(new SQLException("You have an error"));
+        Response response = clientDetailsResource.removeClient(1, "TESTFIRSTNAME");
 
         assertEquals(response.getStatus(), serverErrorStatus);
         assertEquals(response.getEntity(), errorMessage);

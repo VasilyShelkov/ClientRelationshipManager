@@ -1,7 +1,5 @@
 package account;
 
-import account.client.ClientAccountsService;
-import account.protectedname.ProtectedNameAccountsService;
 import account.unprotectedname.UnprotectedNameAccountsService;
 import dataObjects.Account;
 import org.joda.time.DateTime;
@@ -37,13 +35,7 @@ public class AccountsResourceTest {
     AccountDetailService mockAccountDetailService;
 
     @Mock
-    ClientAccountsService mockClientAccountsService;
-
-    @Mock
     UnprotectedNameAccountsService mockUnprotectedNameAccountsService;
-
-    @Mock
-    ProtectedNameAccountsService mockProtectedNameAccountsService;
 
     private AccountsResource accountsResource;
     private Timestamp currentTime = new Timestamp(DateTime.now().getMillis());
@@ -54,7 +46,7 @@ public class AccountsResourceTest {
     @Before
     public void setUp() {
         accountsResource = new AccountsResource(mockAccountService, mockAccountDetailService,
-                mockUnprotectedNameAccountsService, mockProtectedNameAccountsService, mockClientAccountsService, factory.getValidator());
+                mockUnprotectedNameAccountsService, factory.getValidator());
         accountList = new ArrayList<>();
         accountList.add(testAccount);
 
@@ -150,95 +142,6 @@ public class AccountsResourceTest {
         assertEquals(((List<Account>) response.getEntity()).size(), 0);
     }
 
-    @Test
-    public void getProtectedNameAccountsOk() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockProtectedNameAccountsService.getProtectedNameAccounts(1)).thenReturn(accountList);
-        Response response = accountsResource.getProtectedNameAccounts(1);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(((List<Account>) response.getEntity()).get(0), accountList.get(0));
-    }
-
-    @Test
-    public void getProtectedNameAccountsError() throws SQLException, IllegalAccessException, InstantiationException {
-        int errorStatus = 500;
-        String errorMessage = "You Have An Error";
-
-        when(mockProtectedNameAccountsService.getProtectedNameAccounts(2)).thenThrow(new SQLException("You Have An Error"));
-        Response response = accountsResource.getProtectedNameAccounts(2);
-
-        assertEquals(response.getStatus(), errorStatus);
-        assertEquals(response.getEntity(), errorMessage);
-    }
-
-    @Test
-    public void getProtectedNameAccountsNull() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockProtectedNameAccountsService.getProtectedNameAccounts(3)).thenReturn(null);
-        Response response = accountsResource.getProtectedNameAccounts(3);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(response.getEntity(), null);
-    }
-
-    @Test
-    public void getProtectedNameAccountsSizeZero() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockProtectedNameAccountsService.getProtectedNameAccounts(4)).thenReturn(new ArrayList<>());
-        Response response = accountsResource.getProtectedNameAccounts(4);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(((List<Account>) response.getEntity()).size(), 0);
-    }
-
-    @Test
-    public void getClientAccountsOk() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockClientAccountsService.getClientNameAccounts(1)).thenReturn(accountList);
-        Response response = accountsResource.getClientAccounts(1);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(((List<Account>) response.getEntity()).get(0), accountList.get(0));
-    }
-
-    @Test
-    public void getClientAccountsError() throws SQLException, IllegalAccessException, InstantiationException {
-        int errorStatus = 500;
-        String errorMessage = "You Have An Error";
-
-        when(mockClientAccountsService.getClientNameAccounts(2)).thenThrow(new SQLException("You Have An Error"));
-        Response response = accountsResource.getClientAccounts(2);
-
-        assertEquals(response.getStatus(), errorStatus);
-        assertEquals(response.getEntity(), errorMessage);
-    }
-
-    @Test
-    public void getClientAccountsNull() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockClientAccountsService.getClientNameAccounts(3)).thenReturn(null);
-        Response response = accountsResource.getClientAccounts(3);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(response.getEntity(), null);
-    }
-
-    @Test
-    public void getClientAccountsSizeZero() throws SQLException, IllegalAccessException, InstantiationException {
-        int okStatus = 200;
-
-        when(mockClientAccountsService.getClientNameAccounts(4)).thenReturn(new ArrayList<>());
-        Response response = accountsResource.getClientAccounts(4);
-
-        assertEquals(response.getStatus(), okStatus);
-        assertEquals(((List<Account>) response.getEntity()).size(), 0);
-    }
 
     @Test
     public void createExistingAccount() throws SQLException, IllegalAccessException, InstantiationException {

@@ -1,7 +1,5 @@
 package names;
 
-import account.client.ClientAccountsService;
-import account.protectedname.ProtectedNameAccountsService;
 import dataObjects.Name;
 import names.clients.AccountClientsService;
 import names.clients.ClientDetailsService;
@@ -51,19 +49,13 @@ public class NamesResourceTest {
     @Mock
     ClientDetailsService mockClientDetailsService;
 
-    @Mock
-    ProtectedNameAccountsService mockProtectedNameAccountsService;
-
-    @Mock
-    ClientAccountsService mockClientAccountsService;
-
     private NamesResource namesResource;
 
     @Before
     public void setUp() throws Exception {
         namesResource = new NamesResource(mockNamesService, mockNameDetailsService, mockUnprotectedNamesService,
-                mockUnprotectedNameDetailsService, mockProtectedNamesService, mockClientsService, mockProtectedNameAccountsService,
-                mockProtectedNameDetailsService, mockClientAccountsService, mockClientDetailsService, Validation.buildDefaultValidatorFactory().getValidator());
+                mockUnprotectedNameDetailsService, mockProtectedNamesService, mockClientsService,
+                mockProtectedNameDetailsService, mockClientDetailsService, Validation.buildDefaultValidatorFactory().getValidator());
     }
 
     @Test

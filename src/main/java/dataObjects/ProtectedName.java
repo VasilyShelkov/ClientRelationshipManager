@@ -84,6 +84,14 @@ public class ProtectedName{
         return priority;
     }
 
+    public void setNameId(int nameId) {
+        this.nameId = nameId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
     public void setProtectedAt(Timestamp protectedAt) {
         this.protectedAt = protectedAt;
     }

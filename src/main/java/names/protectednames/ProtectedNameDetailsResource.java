@@ -28,9 +28,9 @@ public class ProtectedNameDetailsResource {
     @GET
     @Path("/{nameId}")
     @Produces("application/json")
-    public Response getProtectedNameDetails(@PathParam("nameId") int id, @PathParam("accountId") int accountId) {
+    public Response getProtectedNameDetails(@PathParam("nameId") int id) {
         try{
-            ProtectedName protectedNameAccountsDetails = protectedNameDetailsService.getDetails(id, accountId);
+            ProtectedName protectedNameAccountsDetails = protectedNameDetailsService.getDetails(id);
             return Response.ok(protectedNameAccountsDetails).build();
         }catch (SQLException |InstantiationException|IllegalAccessException e){
             return Response.serverError().entity(e.getMessage()).build();
@@ -39,13 +39,12 @@ public class ProtectedNameDetailsResource {
 
     @DELETE
     @Path("/{nameId}")
-    public Response removeProtectedName(@PathParam("nameId") int nameId, @PathParam("accountId") int accountId,
-                                        @QueryParam("clientFirstName") String confirmedClientFirstName) {
+    public Response removeProtectedName(@PathParam("nameId") int nameId, @QueryParam("clientFirstName") String confirmedClientFirstName) {
         try {
             Name name = nameDetailsService.getName(nameId);
             if(name.getFirstName().toUpperCase().equals(confirmedClientFirstName)){
-                if(protectedNameDetailsService.getDetails(nameId, accountId) != null) {
-                    protectedNameDetailsService.removeUnprotectedName(nameId, accountId);
+                if(protectedNameDetailsService.getDetails(nameId) != null) {
+                    protectedNameDetailsService.removeUnprotectedName(nameId);
                     return Response.status(Response.Status.OK).entity(name.getFirstName() + " has been successfully deleted").build();
                 }
                 return Response.status(Response.Status.BAD_REQUEST).entity(name.getFirstName() + " " + name.getOtherNames()

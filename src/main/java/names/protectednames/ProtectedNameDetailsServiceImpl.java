@@ -21,12 +21,12 @@ public class ProtectedNameDetailsServiceImpl implements ProtectedNameDetailsServ
     }
 
     @Override
-    public ProtectedName getDetails(int nameId, int accountId) throws SQLException, InstantiationException, IllegalAccessException {
-        return protectedNameDetailsSQLService.getProtectedNameDetails(nameId, accountId);
+    public ProtectedName getDetails(int nameId) throws SQLException, InstantiationException, IllegalAccessException {
+        return protectedNameDetailsSQLService.getProtectedNameDetails(nameId);
     }
 
     @Override
-    public void removeUnprotectedName(int nameId, int accountId) throws SQLException, InstantiationException, IllegalAccessException{
-        protectedNameDetailsSQLService.removeProtectedName(nameId, accountId);
+    public void removeUnprotectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException{
+        protectedNameDetailsSQLService.removeProtectedName(nameId);
     }
 }

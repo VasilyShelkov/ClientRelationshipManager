@@ -21,12 +21,12 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     }
 
     @Override
-    public Client getDetails(int nameId, int accountId) throws SQLException, InstantiationException, IllegalAccessException {
-        return clientDetailsSQLService.getClientDetails(nameId, accountId);
+    public Client getDetails(int nameId) throws SQLException, InstantiationException, IllegalAccessException {
+        return clientDetailsSQLService.getClientDetails(nameId);
     }
 
     @Override
-    public void deleteAccount(int nameId, int accountId) throws IllegalAccessException, SQLException, InstantiationException {
-        clientDetailsSQLService.removeClient(nameId, accountId);
+    public void deleteAccount(int nameId) throws IllegalAccessException, SQLException, InstantiationException {
+        clientDetailsSQLService.removeClient(nameId);
     }
 }

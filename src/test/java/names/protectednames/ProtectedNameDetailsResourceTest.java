@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,8 +44,8 @@ public class ProtectedNameDetailsResourceTest {
     public void getProtectedNamesDetailTest() throws IllegalAccessException, SQLException, InstantiationException {
         int okStatus = 200;
 
-        when(mockProtectedNameDetailService.getDetails(1, 2)).thenReturn(testProtectedName);
-        Response response = protectedNameDetailsResource.getProtectedNameDetails(1, 2);
+        when(mockProtectedNameDetailService.getDetails(1)).thenReturn(testProtectedName);
+        Response response = protectedNameDetailsResource.getProtectedNameDetails(1);
 
         assertEquals(response.getStatus(), okStatus);
         assertEquals(response.getEntity(), testProtectedName);
@@ -56,8 +56,8 @@ public class ProtectedNameDetailsResourceTest {
         int errorStatus = 500;
         String errorMessage = "You Have An Error";
 
-        when(mockProtectedNameDetailService.getDetails(1, 2)).thenThrow(new SQLException("You Have An Error"));
-        Response response = protectedNameDetailsResource.getProtectedNameDetails(1, 2);
+        when(mockProtectedNameDetailService.getDetails(1)).thenThrow(new SQLException("You Have An Error"));
+        Response response = protectedNameDetailsResource.getProtectedNameDetails(1);
 
         assertEquals(response.getStatus(), errorStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -146,7 +146,7 @@ public class ProtectedNameDetailsResourceTest {
         String errorMessage = "Did not delete protected name because the first name was not spelt correctly in CAPITALS";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        Response response = protectedNameDetailsResource.removeProtectedName(1, 2, "WRONGFIRSTNAME");
+        Response response = protectedNameDetailsResource.removeProtectedName(1, "WRONGFIRSTNAME");
 
         assertEquals(response.getStatus(), notAcceptableStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -158,8 +158,8 @@ public class ProtectedNameDetailsResourceTest {
         String errorMessage = "testFirstName testOtherNames does not exist and therefore can not be deleted";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        when(mockProtectedNameDetailService.getDetails(1, 2)).thenReturn(null);
-        Response response = protectedNameDetailsResource.removeProtectedName(1, 2, "TESTFIRSTNAME");
+        when(mockProtectedNameDetailService.getDetails(1)).thenReturn(null);
+        Response response = protectedNameDetailsResource.removeProtectedName(1, "TESTFIRSTNAME");
 
         assertEquals(response.getStatus(), noContentStatus);
         assertEquals(response.getEntity(), errorMessage);
@@ -171,8 +171,8 @@ public class ProtectedNameDetailsResourceTest {
         String errorMessage = "You have an error";
 
         when(mockNameDetailsService.getName(1)).thenReturn(testName);
-        when(mockProtectedNameDetailService.getDetails(1, 2)).thenThrow(new SQLException("You have an error"));
-        Response response = protectedNameDetailsResource.removeProtectedName(1, 2, "TESTFIRSTNAME");
+        when(mockProtectedNameDetailService.getDetails(1)).thenThrow(new SQLException("You have an error"));
+        Response response = protectedNameDetailsResource.removeProtectedName(1, "TESTFIRSTNAME");
 
         assertEquals(response.getStatus(), serverErrorStatus);
         assertEquals(response.getEntity(), errorMessage);

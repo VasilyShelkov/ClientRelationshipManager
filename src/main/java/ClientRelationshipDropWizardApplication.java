@@ -2,9 +2,6 @@ import account.AccountDetailServiceImpl;
 import account.AccountServiceImpl;
 import account.AccountsDetailResource;
 import account.AccountsResource;
-import account.client.ClientAccountsServiceImpl;
-import account.protectedname.ProtectedNameAccountsServiceImpl;
-import account.unprotectedname.UnprotectedNameAccountsService;
 import account.unprotectedname.UnprotectedNameAccountsServiceImpl;
 import dataObjects.Account;
 import dataObjects.Name;
@@ -27,7 +24,6 @@ import names.clients.ClientDetailsResource;
 import names.clients.ClientDetailsServiceImpl;
 import names.protectednames.AccountProtectedNamesServiceImpl;
 import names.protectednames.ProtectedNameDetailsResource;
-import names.protectednames.ProtectedNameDetailsService;
 import names.protectednames.ProtectedNameDetailsServiceImpl;
 import names.unprotectednames.AccountUnprotectedNamesServiceImpl;
 import names.unprotectednames.UnprotectedNameDetailsResource;
@@ -68,9 +64,7 @@ public class ClientRelationshipDropWizardApplication extends Application<ClientR
         context.register(AccountDetailsSQLService.class);
         context.register(UnprotectedNameAccountsServiceImpl.class);
         context.register(UnprotectedNameAccountsSQLService.class);
-        context.register(ProtectedNameAccountsServiceImpl.class);
         context.register(ProtectedNameAccountsSQLService.class);
-        context.register(ClientAccountsServiceImpl.class);
         context.register(ClientAccountsSQLService.class);
 
         context.register(NamesResource.class);
@@ -117,12 +111,12 @@ public class ClientRelationshipDropWizardApplication extends Application<ClientR
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
-        //environment.jersey().register(clientRelationshipManagerContext.getBean("accountsResource"));
-        //environment.jersey().register(clientRelationshipManagerContext.getBean("accountsDetailResource"));
-        //environment.jersey().register(clientRelationshipManagerContext.getBean("namesResource"));
+        environment.jersey().register(clientRelationshipManagerContext.getBean("accountsResource"));
+        environment.jersey().register(clientRelationshipManagerContext.getBean("accountsDetailResource"));
+        environment.jersey().register(clientRelationshipManagerContext.getBean("namesResource"));
         environment.jersey().register(clientRelationshipManagerContext.getBean("unprotectedNameDetailsResource"));
-        //environment.jersey().register(clientRelationshipManagerContext.getBean("protectedNameDetailsResource"));
-        //environment.jersey().register(clientRelationshipManagerContext.getBean("clientDetailsResource"));
+        environment.jersey().register(clientRelationshipManagerContext.getBean("protectedNameDetailsResource"));
+        environment.jersey().register(clientRelationshipManagerContext.getBean("clientDetailsResource"));
     }
 
     @Override

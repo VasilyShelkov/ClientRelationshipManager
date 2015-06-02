@@ -29,12 +29,11 @@ public class ProtectedNameDetailsSQLService extends JOOQSQLService {
         super(connectionService);
     }
 
-    public ProtectedName getProtectedNameDetails(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
+    public ProtectedName getProtectedNameDetails(int nameId) throws SQLException, IllegalAccessException, InstantiationException {
         Record record = getDSLContext()
                 .select(protectedNameFields)
                 .from(PROTECTEDNAMES)
-                .where(PROTECTEDNAMES.ACCOUNTID.equal(accountId))
-                .and(PROTECTEDNAMES.NAMEID.equal(nameId))
+                .where(PROTECTEDNAMES.NAMEID.equal(nameId))
                 .fetchOne();
         if (record == null){
             return null;
@@ -42,11 +41,10 @@ public class ProtectedNameDetailsSQLService extends JOOQSQLService {
         return record.into(ProtectedName.class);
     }
 
-    public void removeProtectedName(int nameId, int accountId) throws SQLException, InstantiationException, IllegalAccessException{
+    public void removeProtectedName(int nameId) throws SQLException, InstantiationException, IllegalAccessException{
         getDSLContext()
             .delete(PROTECTEDNAMES)
             .where(PROTECTEDNAMES.NAMEID.equal(nameId))
-            .and(PROTECTEDNAMES.ACCOUNTID.equal(accountId))
             .execute();
     }
 }

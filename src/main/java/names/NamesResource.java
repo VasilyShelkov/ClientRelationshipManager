@@ -1,7 +1,5 @@
 package names;
 
-import account.client.ClientAccountsService;
-import account.protectedname.ProtectedNameAccountsService;
 import com.codahale.metrics.annotation.ExceptionMetered;
 import com.codahale.metrics.annotation.Timed;
 import dataObjects.Client;
@@ -39,26 +37,21 @@ public class NamesResource {
     private UnprotectedNameDetailsService unprotectedNameDetailsService;
     private AccountProtectedNamesService accountProtectedNamesService;
     private AccountClientsService accountClientsService;
-    private ProtectedNameAccountsService protectedNameAccountsService;
     private ProtectedNameDetailsService protectedNameDetailsService;
-    private ClientAccountsService clientAccountsService;
     private ClientDetailsService clientDetailsService;
     private Validator validator;
 
     @Autowired
     public NamesResource(NamesService namesService, NameDetailsService nameDetailsService, AccountUnprotectedNamesService accountUnprotectedNamesService,
                          UnprotectedNameDetailsService unprotectedNameDetailsService, AccountProtectedNamesService accountProtectedNamesService, AccountClientsService accountClientsService,
-                         ProtectedNameAccountsService protectedNameAccountsService, ProtectedNameDetailsService protectedNameDetailsService,
-                         ClientAccountsService clientAccountsService, ClientDetailsService clientDetailsService, Validator validator) {
+                          ProtectedNameDetailsService protectedNameDetailsService, ClientDetailsService clientDetailsService, Validator validator) {
         this.namesService = namesService;
         this.nameDetailsService = nameDetailsService;
         this.accountUnprotectedNamesService = accountUnprotectedNamesService;
         this.unprotectedNameDetailsService = unprotectedNameDetailsService;
         this.accountProtectedNamesService = accountProtectedNamesService;
         this.accountClientsService = accountClientsService;
-        this.protectedNameAccountsService = protectedNameAccountsService;
         this.protectedNameDetailsService = protectedNameDetailsService;
-        this.clientAccountsService = clientAccountsService;
         this.clientDetailsService = clientDetailsService;
         this.validator = validator;
     }
@@ -177,19 +170,15 @@ public class NamesResource {
     public Response createProtectedName(ProtectedName protectedName) {
         try {
             int nameId = protectedName.getNameId();
-            int accountId = protectedName.getAccountId();
             if(nameDetailsService.getName(nameId) != null) {
-                if (protectedNameDetailsService.getDetails(nameId, accountId) == null) {
-                    if (!isProtectedClient(nameId)) {
-                        Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
-                        if (constraintViolations.size() == 0) {
-                            return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
-                        }
-                        return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
+                if (!isProtectedClient(nameId)) {
+                    Set<ConstraintViolation<ProtectedName>> constraintViolations = validator.validate(protectedName);
+                    if (constraintViolations.size() == 0) {
+                        return Response.status(Response.Status.CREATED).entity(accountProtectedNamesService.createProtectedName(protectedName)).build();
                     }
-                    return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
+                    return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                 }
-                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("protected name already exists").build();
+                return Response.status(Response.Status.CONFLICT).entity("Name is already protected or a client to someone else").build();
             }
             return Response.status(Response.Status.NOT_FOUND).entity("name does not exist").build();
         } catch (SQLException |InstantiationException|IllegalAccessException e) {
@@ -207,19 +196,15 @@ public class NamesResource {
     public Response createClient(Client client) {
         try {
             int nameId = client.getNameId();
-            int accountId = client.getAccountId();
             if(nameDetailsService.getName(nameId) != null) {
-                if (clientDetailsService.getDetails(nameId, accountId) == null) {
-                    if (!isClient(nameId)) {
-                        Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
-                        if (constraintViolations.size() == 0) {
-                            return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
-                        }
-                        return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
+                if (!isClient(nameId)) {
+                    Set<ConstraintViolation<Client>> constraintViolations = validator.validate(client);
+                    if (constraintViolations.size() == 0) {
+                        return Response.status(Response.Status.CREATED).entity(accountClientsService.createClient(client)).build();
                     }
-                    return Response.status(Response.Status.CONFLICT).entity("Name is already a client to someone else").build();
+                    return Response.status(Response.Status.BAD_REQUEST).entity(constraintViolations).build();
                 }
-                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("client already exists").build();
+                return Response.status(Response.Status.CONFLICT).entity("Name is already a client to someone else").build();
             }
             return Response.status(Response.Status.NOT_FOUND).entity("name does not exist").build();
         } catch (SQLException |InstantiationException|IllegalAccessException e) {
@@ -228,11 +213,11 @@ public class NamesResource {
     }
 
     private boolean isProtectedClient(int nameId) throws SQLException, InstantiationException, IllegalAccessException {
-        return (protectedNameAccountsService.getProtectedNameAccounts(nameId).size() > 0
+        return (protectedNameDetailsService.getDetails(nameId) != null
                 || isClient(nameId));
     }
 
     private boolean isClient(int nameId) throws SQLException, InstantiationException, IllegalAccessException {
-        return clientAccountsService.getClientNameAccounts(nameId).size() > 0;
+        return clientDetailsService.getDetails(nameId) != null;
     }
 }

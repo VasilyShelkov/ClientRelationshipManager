@@ -27,12 +27,11 @@ public class ClientDetailsSQLService extends JOOQSQLService {
         super(connectionService);
     }
 
-    public Client getClientDetails(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
+    public Client getClientDetails(int nameId) throws SQLException, IllegalAccessException, InstantiationException {
         Record record = getDSLContext()
                 .select(clientFields)
                 .from(CLIENTS)
-                .where(CLIENTS.ACCOUNTID.equal(accountId))
-                .and(CLIENTS.NAMEID.equal(nameId))
+                .where(CLIENTS.NAMEID.equal(nameId))
                 .fetchOne();
         if (record == null){
             return null;
@@ -40,11 +39,10 @@ public class ClientDetailsSQLService extends JOOQSQLService {
         return record.into(Client.class);
     }
 
-    public void removeClient(int nameId, int accountId) throws SQLException, IllegalAccessException, InstantiationException {
+    public void removeClient(int nameId) throws SQLException, IllegalAccessException, InstantiationException {
         getDSLContext()
             .delete(CLIENTS)
             .where(CLIENTS.NAMEID.equal(nameId))
-            .and(CLIENTS.ACCOUNTID.equal(accountId))
             .execute();
     }
 }

@@ -28,9 +28,9 @@ public class ClientDetailsResource {
     @GET
     @Path("/{nameId}")
     @Produces("application/json")
-    public Response getClientDetails(@PathParam("nameId") int id, @PathParam("accountId") int accountId) {
+    public Response getClientDetails(@PathParam("nameId") int id) {
         try{
-            Client clientNameAccountsDetails = clientNameDetailsService.getDetails(id, accountId);
+            Client clientNameAccountsDetails = clientNameDetailsService.getDetails(id);
             return Response.ok(clientNameAccountsDetails).build();
         }catch (SQLException |InstantiationException|IllegalAccessException e){
             return Response.serverError().entity(e.getMessage()).build();
@@ -39,13 +39,12 @@ public class ClientDetailsResource {
 
     @DELETE
     @Path("/{nameId}")
-    public Response removeClient(@PathParam("nameId") int nameId, @PathParam("accountId") int accountId,
-                                 @QueryParam("clientFirstName") String confirmedClientFirstName) {
+    public Response removeClient(@PathParam("nameId") int nameId, @QueryParam("clientFirstName") String confirmedClientFirstName) {
         try {
             Name name = nameDetailsService.getName(nameId);
             if(name.getFirstName().toUpperCase().equals(confirmedClientFirstName)){
-                if(clientNameDetailsService.getDetails(nameId, accountId) != null) {
-                    clientNameDetailsService.deleteAccount(nameId, accountId);
+                if(clientNameDetailsService.getDetails(nameId) != null) {
+                    clientNameDetailsService.deleteAccount(nameId);
                     return Response.status(Response.Status.OK).entity(name.getFirstName() + " has been successfully deleted").build();
                 }
                 return Response.status(Response.Status.BAD_REQUEST).entity(name.getFirstName() + " " + name.getOtherNames()
