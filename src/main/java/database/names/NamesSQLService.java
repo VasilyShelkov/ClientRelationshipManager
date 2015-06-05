@@ -15,7 +15,7 @@ import static generated.Tables.NAMES;
  */
 abstract public class NamesSQLService extends JOOQSQLService {
 
-    static private List<TableField<NamesRecord, ?>> nameFields = Arrays.asList(NAMES.NAMEID, NAMES.FIRSTNAME, NAMES.OTHERNAMES, NAMES.MOBILENUMBER, NAMES.OFFICENUMBER, NAMES.COMPANY, NAMES.PICTUREID);
+    static private List<TableField<NamesRecord, ?>> nameFields = Arrays.asList(NAMES.NAMEID, NAMES.FIRSTNAME, NAMES.OTHERNAMES, NAMES.MOBILENUMBER, NAMES.COMPANYID, NAMES.PICTUREID);
 
     public NamesSQLService(ConnectionService connectionService) {
         super(connectionService);

@@ -11,7 +11,7 @@ package generated;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protectme extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1159699689;
+	private static final long serialVersionUID = -1847931577;
 
 	/**
 	 * The singleton instance of <code>protectme</code>
@@ -36,6 +36,8 @@ public class Protectme extends org.jooq.impl.SchemaImpl {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			generated.tables.Accounts.ACCOUNTS,
 			generated.tables.Clients.CLIENTS,
+			generated.tables.Comments.COMMENTS,
+			generated.tables.Company.COMPANY,
 			generated.tables.Names.NAMES,
 			generated.tables.Pictures.PICTURES,
 			generated.tables.Protectednames.PROTECTEDNAMES,

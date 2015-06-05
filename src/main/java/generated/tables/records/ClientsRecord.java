@@ -11,7 +11,7 @@ package generated.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ClientsRecord extends org.jooq.impl.UpdatableRecordImpl<generated.tables.records.ClientsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1677257072;
+	private static final long serialVersionUID = -1649220580;
 
 	/**
 	 * Setter for <code>protectme.clients.NameID</code>.
@@ -63,8 +63,8 @@ public class ClientsRecord extends org.jooq.impl.UpdatableRecordImpl<generated.t
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record2<java.lang.Integer, java.lang.Integer> key() {
-		return (org.jooq.Record2) super.key();
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------

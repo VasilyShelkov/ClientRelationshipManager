@@ -11,7 +11,7 @@ package generated.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accounts extends org.jooq.impl.TableImpl<generated.tables.records.AccountsRecord> {
 
-	private static final long serialVersionUID = 567225895;
+	private static final long serialVersionUID = -1436248789;
 
 	/**
 	 * The singleton instance of <code>protectme.accounts</code>
@@ -59,7 +59,7 @@ public class Accounts extends org.jooq.impl.TableImpl<generated.tables.records.A
 	/**
 	 * The column <code>protectme.accounts.PictureID</code>.
 	 */
-	public final org.jooq.TableField<generated.tables.records.AccountsRecord, java.lang.Integer> PICTUREID = createField("PictureID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<generated.tables.records.AccountsRecord, java.lang.Integer> PICTUREID = createField("PictureID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>protectme.accounts</code> table reference

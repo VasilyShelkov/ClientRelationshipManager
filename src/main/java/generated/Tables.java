@@ -24,6 +24,16 @@ public class Tables {
 	public static final generated.tables.Clients CLIENTS = generated.tables.Clients.CLIENTS;
 
 	/**
+	 * The table protectme.comments
+	 */
+	public static final generated.tables.Comments COMMENTS = generated.tables.Comments.COMMENTS;
+
+	/**
+	 * The table protectme.company
+	 */
+	public static final generated.tables.Company COMPANY = generated.tables.Company.COMPANY;
+
+	/**
 	 * The table protectme.names
 	 */
 	public static final generated.tables.Names NAMES = generated.tables.Names.NAMES;
@@ -34,7 +44,7 @@ public class Tables {
 	public static final generated.tables.Pictures PICTURES = generated.tables.Pictures.PICTURES;
 
 	/**
-	 * The table protectme.protectedname
+	 * The table protectme.protectednames
 	 */
 	public static final generated.tables.Protectednames PROTECTEDNAMES = generated.tables.Protectednames.PROTECTEDNAMES;
 

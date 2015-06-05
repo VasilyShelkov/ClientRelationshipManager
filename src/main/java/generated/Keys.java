@@ -19,6 +19,7 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	public static final org.jooq.Identity<generated.tables.records.AccountsRecord, java.lang.Integer> IDENTITY_ACCOUNTS = Identities0.IDENTITY_ACCOUNTS;
+	public static final org.jooq.Identity<generated.tables.records.CompanyRecord, java.lang.Integer> IDENTITY_COMPANY = Identities0.IDENTITY_COMPANY;
 	public static final org.jooq.Identity<generated.tables.records.NamesRecord, java.lang.Integer> IDENTITY_NAMES = Identities0.IDENTITY_NAMES;
 	public static final org.jooq.Identity<generated.tables.records.PicturesRecord, java.lang.Integer> IDENTITY_PICTURES = Identities0.IDENTITY_PICTURES;
 
@@ -29,6 +30,8 @@ public class Keys {
 	public static final org.jooq.UniqueKey<generated.tables.records.AccountsRecord> KEY_ACCOUNTS_PRIMARY = UniqueKeys0.KEY_ACCOUNTS_PRIMARY;
 	public static final org.jooq.UniqueKey<generated.tables.records.AccountsRecord> KEY_ACCOUNTS_USERNAME = UniqueKeys0.KEY_ACCOUNTS_USERNAME;
 	public static final org.jooq.UniqueKey<generated.tables.records.ClientsRecord> KEY_CLIENTS_PRIMARY = UniqueKeys0.KEY_CLIENTS_PRIMARY;
+	public static final org.jooq.UniqueKey<generated.tables.records.CommentsRecord> KEY_COMMENTS_PRIMARY = UniqueKeys0.KEY_COMMENTS_PRIMARY;
+	public static final org.jooq.UniqueKey<generated.tables.records.CompanyRecord> KEY_COMPANY_PRIMARY = UniqueKeys0.KEY_COMPANY_PRIMARY;
 	public static final org.jooq.UniqueKey<generated.tables.records.NamesRecord> KEY_NAMES_PRIMARY = UniqueKeys0.KEY_NAMES_PRIMARY;
 	public static final org.jooq.UniqueKey<generated.tables.records.PicturesRecord> KEY_PICTURES_PRIMARY = UniqueKeys0.KEY_PICTURES_PRIMARY;
 	public static final org.jooq.UniqueKey<generated.tables.records.ProtectednamesRecord> KEY_PROTECTEDNAMES_PRIMARY = UniqueKeys0.KEY_PROTECTEDNAMES_PRIMARY;
@@ -45,6 +48,7 @@ public class Keys {
 
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<generated.tables.records.AccountsRecord, java.lang.Integer> IDENTITY_ACCOUNTS = createIdentity(generated.tables.Accounts.ACCOUNTS, generated.tables.Accounts.ACCOUNTS.ACCOUNTID);
+		public static org.jooq.Identity<generated.tables.records.CompanyRecord, java.lang.Integer> IDENTITY_COMPANY = createIdentity(generated.tables.Company.COMPANY, generated.tables.Company.COMPANY.COMPANYID);
 		public static org.jooq.Identity<generated.tables.records.NamesRecord, java.lang.Integer> IDENTITY_NAMES = createIdentity(generated.tables.Names.NAMES, generated.tables.Names.NAMES.NAMEID);
 		public static org.jooq.Identity<generated.tables.records.PicturesRecord, java.lang.Integer> IDENTITY_PICTURES = createIdentity(generated.tables.Pictures.PICTURES, generated.tables.Pictures.PICTURES.PICTUREID);
 	}
@@ -52,7 +56,9 @@ public class Keys {
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<generated.tables.records.AccountsRecord> KEY_ACCOUNTS_PRIMARY = createUniqueKey(generated.tables.Accounts.ACCOUNTS, generated.tables.Accounts.ACCOUNTS.ACCOUNTID);
 		public static final org.jooq.UniqueKey<generated.tables.records.AccountsRecord> KEY_ACCOUNTS_USERNAME = createUniqueKey(generated.tables.Accounts.ACCOUNTS, generated.tables.Accounts.ACCOUNTS.USERNAME);
-		public static final org.jooq.UniqueKey<generated.tables.records.ClientsRecord> KEY_CLIENTS_PRIMARY = createUniqueKey(generated.tables.Clients.CLIENTS, generated.tables.Clients.CLIENTS.NAMEID, generated.tables.Clients.CLIENTS.ACCOUNTID);
+		public static final org.jooq.UniqueKey<generated.tables.records.ClientsRecord> KEY_CLIENTS_PRIMARY = createUniqueKey(generated.tables.Clients.CLIENTS, generated.tables.Clients.CLIENTS.NAMEID);
+		public static final org.jooq.UniqueKey<generated.tables.records.CommentsRecord> KEY_COMMENTS_PRIMARY = createUniqueKey(generated.tables.Comments.COMMENTS, generated.tables.Comments.COMMENTS.ACCOUNTID, generated.tables.Comments.COMMENTS.NAMEID, generated.tables.Comments.COMMENTS.COMMENTID);
+		public static final org.jooq.UniqueKey<generated.tables.records.CompanyRecord> KEY_COMPANY_PRIMARY = createUniqueKey(generated.tables.Company.COMPANY, generated.tables.Company.COMPANY.COMPANYID);
 		public static final org.jooq.UniqueKey<generated.tables.records.NamesRecord> KEY_NAMES_PRIMARY = createUniqueKey(generated.tables.Names.NAMES, generated.tables.Names.NAMES.NAMEID);
 		public static final org.jooq.UniqueKey<generated.tables.records.PicturesRecord> KEY_PICTURES_PRIMARY = createUniqueKey(generated.tables.Pictures.PICTURES, generated.tables.Pictures.PICTURES.PICTUREID);
 		public static final org.jooq.UniqueKey<generated.tables.records.ProtectednamesRecord> KEY_PROTECTEDNAMES_PRIMARY = createUniqueKey(generated.tables.Protectednames.PROTECTEDNAMES, generated.tables.Protectednames.PROTECTEDNAMES.ACCOUNTID, generated.tables.Protectednames.PROTECTEDNAMES.NAMEID);

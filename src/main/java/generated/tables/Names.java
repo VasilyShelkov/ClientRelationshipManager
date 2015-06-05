@@ -11,7 +11,7 @@ package generated.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Names extends org.jooq.impl.TableImpl<generated.tables.records.NamesRecord> {
 
-	private static final long serialVersionUID = -1181657496;
+	private static final long serialVersionUID = 58103960;
 
 	/**
 	 * The singleton instance of <code>protectme.names</code>
@@ -47,19 +47,14 @@ public class Names extends org.jooq.impl.TableImpl<generated.tables.records.Name
 	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.String> MOBILENUMBER = createField("MobileNumber", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>protectme.names.OfficeNumber</code>.
+	 * The column <code>protectme.names.CompanyID</code>.
 	 */
-	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.String> OFFICENUMBER = createField("OfficeNumber", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false).defaulted(true), this, "");
-
-	/**
-	 * The column <code>protectme.names.Company</code>.
-	 */
-	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.String> COMPANY = createField("Company", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.Integer> COMPANYID = createField("CompanyID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>protectme.names.PictureID</code>.
 	 */
-	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.Integer> PICTUREID = createField("PictureID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<generated.tables.records.NamesRecord, java.lang.Integer> PICTUREID = createField("PictureID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>protectme.names</code> table reference

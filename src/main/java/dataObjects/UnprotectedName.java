@@ -2,7 +2,7 @@ package dataObjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import generated.enums.unprotectedNamesPriority;
+import generated.enums.UnprotectedNamesPriority;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,16 +20,16 @@ public class UnprotectedName{
     private Timestamp addedAt;
 
     @NotBlank(message = "The priority of the unprotected name may not be empty")
-    private unprotectedNamesPriority priority;
+    private UnprotectedNamesPriority priority;
 
-    public UnprotectedName(String comments, Timestamp addedAt, unprotectedNamesPriority priority) {
+    public UnprotectedName(String comments, Timestamp addedAt, UnprotectedNamesPriority priority) {
         this.comments = comments;
         this.addedAt = addedAt;
         this.priority = priority;
     }
 
     @JsonCreator
-    public UnprotectedName(@JsonProperty("nameId") int nameID, @JsonProperty("accountId") int accountID, @JsonProperty("comments") String comments, @JsonProperty("priority") unprotectedNamesPriority priority) {
+    public UnprotectedName(@JsonProperty("nameId") int nameID, @JsonProperty("accountId") int accountID, @JsonProperty("comments") String comments, @JsonProperty("priority") UnprotectedNamesPriority priority) {
         this.nameId = nameID;
         this.accountId = accountID;
         this.comments = comments;
@@ -52,7 +52,7 @@ public class UnprotectedName{
         return addedAt;
     }
 
-    public unprotectedNamesPriority getPriority() {
+    public UnprotectedNamesPriority getPriority() {
         return priority;
     }
 

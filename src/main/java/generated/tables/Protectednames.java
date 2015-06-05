@@ -13,10 +13,10 @@ import generated.enums.ProtectedNamesPriority;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Protectednames extends org.jooq.impl.TableImpl<generated.tables.records.ProtectednamesRecord> {
 
-	private static final long serialVersionUID = 1732411918;
+	private static final long serialVersionUID = 1460054654;
 
 	/**
-	 * The singleton instance of <code>protectme.protectedname</code>
+	 * The singleton instance of <code>protectme.protectednames</code>
 	 */
 	public static final generated.tables.Protectednames PROTECTEDNAMES = new generated.tables.Protectednames();
 
@@ -29,59 +29,54 @@ public class Protectednames extends org.jooq.impl.TableImpl<generated.tables.rec
 	}
 
 	/**
-	 * The column <code>protectme.protectedname.AccountID</code>.
+	 * The column <code>protectme.protectednames.AccountID</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.lang.Integer> ACCOUNTID = createField("AccountID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.NameID</code>.
+	 * The column <code>protectme.protectednames.NameID</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.lang.Integer> NAMEID = createField("NameID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.Comments</code>.
-	 */
-	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.lang.String> COMMENTS = createField("Comments", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false).defaulted(true), this, "");
-
-	/**
-	 * The column <code>protectme.protectedname.Called</code>.
+	 * The column <code>protectme.protectednames.Called</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.lang.Boolean> CALLED = createField("Called", org.jooq.impl.SQLDataType.BIT.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.Booked</code>.
+	 * The column <code>protectme.protectednames.Booked</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.lang.Boolean> BOOKED = createField("Booked", org.jooq.impl.SQLDataType.BIT.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.CallBack</code>.
+	 * The column <code>protectme.protectednames.CallBack</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.sql.Timestamp> CALLBACK = createField("CallBack", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.DateBooked</code>.
+	 * The column <code>protectme.protectednames.DateBooked</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.sql.Timestamp> DATEBOOKED = createField("DateBooked", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.ProtectedAt</code>.
+	 * The column <code>protectme.protectednames.ProtectedAt</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, java.sql.Timestamp> PROTECTEDAT = createField("ProtectedAt", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>protectme.protectedname.Priority</code>.
+	 * The column <code>protectme.protectednames.Priority</code>.
 	 */
 	public final org.jooq.TableField<generated.tables.records.ProtectednamesRecord, ProtectedNamesPriority> PRIORITY = createField("Priority", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(ProtectedNamesPriority.class), this, "");
 
 	/**
-	 * Create a <code>protectme.protectedname</code> table reference
+	 * Create a <code>protectme.protectednames</code> table reference
 	 */
 	public Protectednames() {
 		this("protectednames", null);
 	}
 
 	/**
-	 * Create an aliased <code>protectme.protectedname</code> table reference
+	 * Create an aliased <code>protectme.protectednames</code> table reference
 	 */
 	public Protectednames(java.lang.String alias) {
 		this(alias, generated.tables.Protectednames.PROTECTEDNAMES);
