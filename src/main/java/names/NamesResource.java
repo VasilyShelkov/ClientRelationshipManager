@@ -77,7 +77,8 @@ public class NamesResource {
     @ExceptionMetered
     public Response createName(Name name) {
         try {
-            List<Name> existingNames = nameDetailsService.searchNames(name.getFirstName(), name.getOtherNames(), name.getCompany(), name.getMobileNumber());
+            List<Name> existingNames = nameDetailsService.searchNames(name.getFirstName(), name.getOtherNames(),
+                    name.getCompany().getName(), name.getMobileNumber());
                 if(existingNames.size() == 0){
                     Set<ConstraintViolation<Name>> constraintViolations = validator.validate(name);
                     if(constraintViolations.size() == 0){

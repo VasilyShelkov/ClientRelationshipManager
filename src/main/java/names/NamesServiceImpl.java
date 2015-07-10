@@ -2,6 +2,7 @@ package names;
 
 import dataObjects.Name;
 import database.generic.GenericNamesSQLService;
+import database.names.NamesGeneralSQLService;
 import generated.Tables;
 import generated.tables.records.NamesRecord;
 import org.jooq.TableField;
@@ -21,15 +22,15 @@ import static generated.tables.Names.NAMES;
 @Service
 public class NamesServiceImpl implements NamesService {
 
-    private GenericNamesSQLService namesSQLService;
+    private NamesGeneralSQLService namesSQLService;
 
     @Autowired
-    public NamesServiceImpl(GenericNamesSQLService namesGenericSQLService) {
+    public NamesServiceImpl(NamesGeneralSQLService namesGenericSQLService) {
         this.namesSQLService = namesGenericSQLService;
     }
 
     public List<Name> getAllNames() throws SQLException, InstantiationException, IllegalAccessException {
-        return namesSQLService.getTable(Tables.NAMES);
+        return namesSQLService.getAllNames();
     }
 
     @Override

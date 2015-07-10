@@ -5,9 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * Created by Vasia on 19/11/2014.
@@ -28,33 +31,32 @@ public class Name {
     @Pattern(regexp="(\\+?[0-9\\s]+)?", message = "The mobile number can only include numbers and spaces")
     private String mobileNumber;
 
-    @Size(max = 50, message = "Size of the office number must be between 0 and 50 characters")
-    @Pattern(regexp="(\\+?[0-9\\s]+)?", message = "The office number can only include numbers and spaces")
-    private String officeNumber;
-
-    @Size(max = 50, message = "Size of the company name must be between 0 and 50 characters")
-    @Pattern(regexp="([A-za-z\\s]+)?", message = "The company name can only include letters")
-    private String company;
+    @NotNull
+    @Valid
+    private Company company;
 
     private int pictureID;
 
-    public Name(int nameId, String firstName, String otherNames, String mobileNumber, String officeNumber, String company, int pictureID) {
+    //Used to create unprotected/protected/client name as other details aren't relevant
+    public Name(int nameId) {
+        this.nameId = nameId;
+    }
+
+    public Name(int nameId, String firstName, String otherNames, String mobileNumber, Company company, int pictureID) {
         this.nameId = nameId;
         this.firstName = firstName;
         this.otherNames = otherNames;
         this.mobileNumber = mobileNumber;
-        this.officeNumber = officeNumber;
         this.company = company;
         this.pictureID = pictureID;
     }
 
     @JsonCreator
     public Name(@JsonProperty("firstName") String firstName, @JsonProperty("otherNames") String otherNames,
-                @JsonProperty("mobileNumber") String mobileNumber, @JsonProperty("officeNumber") String officeNumber, @JsonProperty("company") String company) {
+                @JsonProperty("mobileNumber") String mobileNumber, @JsonProperty("company") Company company) {
         this.firstName = firstName;
         this.otherNames = otherNames;
         this.mobileNumber = mobileNumber;
-        this.officeNumber = officeNumber;
         this.company = company;
     }
 
@@ -74,11 +76,7 @@ public class Name {
         return mobileNumber;
     }
 
-    public String getOfficeNumber() {
-        return officeNumber;
-    }
-
-    public String getCompany() {
+    public Company getCompany() {
         return company;
     }
 
@@ -97,38 +95,24 @@ public class Name {
     private boolean isPhoneNumbersValid() {
         if(mobileNumber != null && mobileNumber.trim().length() > 0)
             return true;
-        return (officeNumber != null && officeNumber.trim().length() > 0);
+        return (company.getOfficeNumber() != null && company.getOfficeNumber().trim().length() > 0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Name)) return false;
+        Name name = (Name) o;
+        return com.google.common.base.Objects.equal(nameId, name.nameId) &&
+                com.google.common.base.Objects.equal(pictureID, name.pictureID) &&
+                com.google.common.base.Objects.equal(firstName, name.firstName) &&
+                com.google.common.base.Objects.equal(otherNames, name.otherNames) &&
+                com.google.common.base.Objects.equal(mobileNumber, name.mobileNumber) &&
+                com.google.common.base.Objects.equal(company, name.company);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
-                // if deriving: appendSuper(super.hashCode()).
-                append(firstName).
-                append(otherNames).
-                append(mobileNumber).
-                append(officeNumber).
-                append(company).
-                append(pictureID).
-                toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Name))
-            return false;
-        if (obj == this)
-            return true;
-
-        Name rhs = (Name) obj;
-        return new EqualsBuilder().
-                // if deriving: appendSuper(super.equals(obj)).
-                append(firstName, rhs.firstName).
-                append(otherNames, rhs.otherNames).
-                append(mobileNumber, rhs.mobileNumber).
-                append(officeNumber, rhs.officeNumber).
-                append(company, rhs.company).
-                append(pictureID, rhs.pictureID).
-                isEquals();
+        return com.google.common.base.Objects.hashCode(nameId, firstName, otherNames, mobileNumber, company, pictureID);
     }
 }

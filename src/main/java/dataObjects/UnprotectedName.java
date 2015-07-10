@@ -2,49 +2,53 @@ package dataObjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Objects;
 import generated.enums.UnprotectedNamesPriority;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.stream.events.Comment;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by Vasia on 18/11/2014.
  */
-public class UnprotectedName{
+public class UnprotectedName extends Name{
 
-    private int nameId;
+    @NotNull
     private int accountId;
-    private String comments;
+
+    private List<Comments> comments;
     private Timestamp addedAt;
 
     @NotBlank(message = "The priority of the unprotected name may not be empty")
     private UnprotectedNamesPriority priority;
 
-    public UnprotectedName(String comments, Timestamp addedAt, UnprotectedNamesPriority priority) {
-        this.comments = comments;
+    public UnprotectedName(int nameId, String firstName, String otherNames, String mobileNumber, Company company, int pictureID,
+                           int accountId, Timestamp addedAt, UnprotectedNamesPriority priority) {
+        super(nameId, firstName, otherNames, mobileNumber, company, pictureID);
+        this.accountId = accountId;
         this.addedAt = addedAt;
         this.priority = priority;
     }
 
     @JsonCreator
-    public UnprotectedName(@JsonProperty("nameId") int nameID, @JsonProperty("accountId") int accountID, @JsonProperty("comments") String comments, @JsonProperty("priority") UnprotectedNamesPriority priority) {
-        this.nameId = nameID;
+    public UnprotectedName(@JsonProperty("nameId") int nameID, @JsonProperty("accountId") int accountID,
+                           @JsonProperty("comments") List<Comments> comments, @JsonProperty("priority") UnprotectedNamesPriority priority) {
+        super(nameID);
         this.accountId = accountID;
         this.comments = comments;
         this.priority = priority;
-    }
-
-    public int getNameId() {
-        return nameId;
     }
 
     public int getAccountId() {
         return accountId;
     }
 
-    public String getComments() {
+    public List<Comments> getComments() {
         return comments;
     }
 
@@ -56,35 +60,29 @@ public class UnprotectedName{
         return priority;
     }
 
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
     public void setAddedAt(Timestamp addedAt) {
         this.addedAt = addedAt;
     }
 
     @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 31).
-                append(nameId).
-                append(accountId).
-                append(comments).
-                append(addedAt).
-                append(priority).
-                toHashCode();
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (!(o instanceof UnprotectedName)) return false;
+        if (!super.equals(o)) return false;
+        UnprotectedName that = (UnprotectedName) o;
+        return Objects.equal(accountId, that.accountId) &&
+                Objects.equal(comments, that.comments) &&
+                Objects.equal(addedAt, that.addedAt) &&
+                Objects.equal(priority, that.priority);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof UnprotectedName))
-            return false;
-        if (obj == this)
-            return true;
-
-        UnprotectedName rhs = (UnprotectedName) obj;
-        return new EqualsBuilder().
-                append(nameId, rhs.nameId).
-                append(accountId, rhs.accountId).
-                append(comments, rhs.comments).
-                append(addedAt, rhs.addedAt).
-                append(priority, rhs.priority).
-                isEquals();
+    public int hashCode() {
+        return Objects.hashCode(super.hashCode(), accountId, comments, addedAt, priority);
     }
 }

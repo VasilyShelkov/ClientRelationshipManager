@@ -2,6 +2,7 @@ package dataObjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,24 +11,22 @@ import java.sql.Timestamp;
 /**
  * Created by Vasia on 18/11/2014.
  */
-public class Client {
+public class Client extends Name {
 
-    private int nameId;
     private int accountId;
     private Timestamp clientAt;
 
-    public Client(Timestamp clientAt) {
+    public Client(int nameId, String firstName, String otherNames, String mobileNumber, Company company, int pictureID,
+                  int accountId, Timestamp clientAt) {
+        super(nameId, firstName, otherNames, mobileNumber, company, pictureID);
+        this.accountId = accountId;
         this.clientAt = clientAt;
     }
 
     @JsonCreator
     public Client(@JsonProperty("nameId") int nameId,@JsonProperty("accountId") int accountId) {
-        this.nameId = nameId;
+        super(nameId);
         this.accountId = accountId;
-    }
-
-    public int getNameId() {
-        return nameId;
     }
 
     public int getAccountId() {
@@ -43,26 +42,17 @@ public class Client {
     }
 
     @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 31).
-                append(nameId).
-                append(accountId).
-                append(clientAt).
-                toHashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        if (!super.equals(o)) return false;
+        Client client = (Client) o;
+        return Objects.equal(accountId, client.accountId) &&
+                Objects.equal(clientAt, client.clientAt);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Client))
-            return false;
-        if (obj == this)
-            return true;
-
-        Client rhs = (Client) obj;
-        return new EqualsBuilder().
-                append(nameId, rhs.nameId).
-                append(accountId, rhs.accountId).
-                append(clientAt, rhs.clientAt).
-                isEquals();
+    public int hashCode() {
+        return Objects.hashCode(super.hashCode(), accountId, clientAt);
     }
 }
